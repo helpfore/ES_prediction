@@ -1,0 +1,172 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{padding:.75rem 0;font-family:var(--font-sans)}
+.top-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:1.25rem}
+.sc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;text-align:center}
+.sn{font-size:21px;font-weight:500;color:var(--color-text-primary)}
+.sl{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
+.tab{font-size:12px;padding:5px 13px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);cursor:pointer;color:var(--color-text-secondary);transition:all .15s}
+.tab.on{background:var(--color-text-primary);color:var(--color-background-primary);border-color:var(--color-text-primary)}
+.ch-block{margin-bottom:1.25rem}
+.ch-head{display:flex;align-items:center;gap:8px;padding:9px 13px;border-radius:var(--border-radius-md);margin-bottom:8px}
+.ch-title{font-size:13px;font-weight:500}
+.ch-co{font-size:11px;padding:2px 8px;border-radius:10px;margin-left:auto;font-weight:500}
+.qcard{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:11px 13px;margin-bottom:7px;cursor:pointer;transition:border-color .15s;display:flex;gap:10px;align-items:flex-start}
+.qcard:hover{border-color:var(--color-border-secondary)}
+.qleft{flex:1;min-width:0}
+.qtext{font-size:13.5px;color:var(--color-text-primary);line-height:1.55}
+.qmeta{display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.badge{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:500}
+.H{background:#FAECE7;color:#993C1D}
+.M{background:#FAEEDA;color:#854F0B}
+.L{background:#EAF3DE;color:#3B6D11}
+.mb{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.freq{background:#E6F1FB;color:#185FA5}
+.detail{display:none;margin-top:8px;padding-top:8px;border-top:0.5px solid var(--color-border-tertiary)}
+.detail-text{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.pyq-list{margin-top:6px;display:flex;flex-wrap:wrap;gap:4px}
+.pyq-pill{font-size:10px;padding:2px 7px;border-radius:8px;background:#E6F1FB;color:#185FA5;font-weight:500}
+.open .detail{display:block}
+.open{border-color:var(--color-border-secondary)}
+.pbar-wrap{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:46px}
+.pbar-track{width:7px;height:48px;background:var(--color-background-secondary);border-radius:4px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+.pbar-fill{width:100%;border-radius:4px}
+.pbar-num{font-size:10px;color:var(--color-text-secondary)}
+.arr{font-size:10px;color:var(--color-text-tertiary);margin-top:1px;transition:transform .2s}
+.open .arr{transform:rotate(180deg)}
+.sbtn{font-size:11px;padding:3px 9px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:transparent;cursor:pointer;color:var(--color-text-secondary);margin-top:5px;display:inline-block}
+.sbtn:hover{background:var(--color-background-secondary)}
+</style>
+<div class="wrap">
+<div class="top-stats">
+  <div class="sc"><div class="sn">7</div><div class="sl">Chapters</div></div>
+  <div class="sc"><div class="sn">26</div><div class="sl">Predicted Qs</div></div>
+  <div class="sc"><div class="sn" style="color:#993C1D">12</div><div class="sl">🔴 Must-do</div></div>
+  <div class="sc"><div class="sn" style="color:#854F0B">10</div><div class="sl">🟡 Likely</div></div>
+</div>
+<div class="tabs" id="tabs">
+  <button class="tab on" onclick="setTab('all',this)">All chapters</button>
+  <button class="tab" onclick="setTab('c1',this)">Ch1 Intro</button>
+  <button class="tab" onclick="setTab('c2',this)">Ch2 Buses</button>
+  <button class="tab" onclick="setTab('c3',this)">Ch3 Drivers</button>
+  <button class="tab" onclick="setTab('c4',this)">Ch4 IPC</button>
+  <button class="tab" onclick="setTab('c5',this)">Ch5 RTOS</button>
+  <button class="tab" onclick="setTab('c6',this)">Ch6 Scheduling</button>
+  <button class="tab" onclick="setTab('c7',this)">Ch7 MSP430</button>
+  <button class="tab" style="background:#FAECE7;color:#993C1D;border-color:#F0997B" onclick="setTab('hot',this)">🔴 Must-do only</button>
+</div>
+<div id="qlist"></div>
+</div>
+<script>
+const chapters=[
+{id:"c1",title:"Chapter 1 – Introduction to Embedded Systems",co:"CO1",bg:"#E1F5EE",tc:"#04342C",ac:"#1D9E75",questions:[
+  {text:"Illustrate any one embedded system (e.g. digital camera / washing machine / ABS) with a neat block diagram and explain each block.",p:97,lvl:"H",marks:"5–7",freq:5,reason:"Asked in EVERY paper 2021–2025 as Q1. Block diagram + explanation is a permanent fixture. Camera / ABS are safest choices.",pyqs:["2021","2022","2023","2024","2025"]},
+  {text:"Differentiate between Small-Scale, Medium-Scale, and Sophisticated Embedded Systems with suitable examples.",p:85,lvl:"H",marks:"4–5",freq:4,reason:"Appears in ~4 of 5 papers. Classification + comparison is a standard 4–5 mark theory question.",pyqs:["2021","2022","2024","2025"]},
+  {text:"Compare General Purpose Processor (GPP), ASIP, and Single-Purpose Processor in a tabular form.",p:80,lvl:"H",marks:"4–5",freq:4,reason:"Regularly asked. Tabular comparison expected. Focus: flexibility, cost, performance, power.",pyqs:["2021","2022","2023","2024"]},
+  {text:"Describe the components of a System-on-Chip (SoC) and the role of VLSI circuit design technology in embedded systems.",p:78,lvl:"H",marks:"5–7",freq:3,reason:"CO1 core topic. Appeared 3 times as 5–7 mark question. Was NOT in last exam — likely due now.",pyqs:["2022","2023","2024"]},
+  {text:"Describe the design process in embedded systems and the formalization of system design.",p:60,lvl:"M",marks:"4",freq:2,reason:"Syllabus topic listed explicitly. Appeared in 2 papers. Medium chance for internal/alternate.",pyqs:["2021","2023"]},
+  {text:"What skills are required for an embedded system designer? Explain based on classification.",p:45,lvl:"L",marks:"3–4",freq:2,reason:"Short-note style. Less likely as a standalone question but may appear as part (b).",pyqs:["2022","2024"]},
+]},
+{id:"c2",title:"Chapter 2 – Device and Communication Buses",co:"CO2",bg:"#E6F1FB",tc:"#042C53",ac:"#378ADD",questions:[
+  {text:"Explain the SPI protocol with a neat timing diagram. Analyze its working mechanism in embedded systems.",p:95,lvl:"H",marks:"7",freq:5,reason:"7-mark question in previous paper. Asked in 4 of 5 PYQs. MOST LIKELY 7-mark question for Unit 2.",pyqs:["2021","2022","2023","2024","2025"]},
+  {text:"Explain the I2C protocol with a neat diagram. Analyze start/stop conditions, ACK, and multi-master operation.",p:90,lvl:"H",marks:"7",freq:5,reason:"The OR alternative to SPI every year. One of SPI or I2C will be the 7-mark question — guaranteed.",pyqs:["2021","2022","2023","2024","2025"]},
+  {text:"Compare Watchdog Timer Reset with Brown-Out Reset — trigger conditions, functionality, and impact on system stability.",p:88,lvl:"H",marks:"4",freq:4,reason:"Appears in 4 PYQs. Previous paper had this as Q2 alternate for 4 marks. Very predictable.",pyqs:["2021","2022","2023","2025"]},
+  {text:"Explain UART protocol. Compare synchronous and asynchronous serial communication with examples.",p:70,lvl:"M",marks:"4–5",freq:3,reason:"UART listed alongside SPI/I2C in CO2. Appears when SPI and I2C both appear as OR — UART fills the gap.",pyqs:["2021","2023","2024"]},
+  {text:"Compare Bluetooth, WiFi, Zigbee, and IrDA wireless communication protocols.",p:55,lvl:"M",marks:"3–4",freq:3,reason:"Wireless protocols in syllabus. Commonly asked as short note or 3-mark part question.",pyqs:["2021","2022","2024"]},
+  {text:"Discuss features and applications of parallel communication protocols: ISA, AMBA, and PCI.",p:50,lvl:"M",marks:"3–5",freq:2,reason:"Syllabus explicitly lists ISA, AMBA, PCI. Appeared 2 times. May come as a compare/contrast question.",pyqs:["2022","2024"]},
+]},
+{id:"c3",title:"Chapter 3 – Device Drivers & Interrupt Services",co:"CO2",bg:"#EEEDFE",tc:"#26215C",ac:"#7F77DD",questions:[
+  {text:"Compare the busy-wait (polled) approach vs. the interrupt-driven mechanism for accessing I/O devices.",p:75,lvl:"H",marks:"4–5",freq:3,reason:"Asked in 3 PYQs. Standard comparison question. Focus on latency, CPU usage, and suitability.",pyqs:["2021","2022","2024"]},
+  {text:"Explain Direct Memory Access (DMA). Describe the operation of a DMA controller with a block diagram.",p:70,lvl:"M",marks:"4–5",freq:3,reason:"DMA controller diagram is a predictable diagram-based question. Appears regularly.",pyqs:["2021","2023","2024"]},
+  {text:"Define ISR, interrupt latency, and service deadline. Explain context switching during interrupt handling.",p:65,lvl:"M",marks:"4",freq:3,reason:"ISR concepts are core to Ch3. Often asked alongside busy-wait vs interrupt comparison.",pyqs:["2021","2022","2023"]},
+  {text:"What is a device driver? Explain requirements and the information needed to write a device driver.",p:50,lvl:"L",marks:"3–4",freq:2,reason:"Device drivers topic in syllabus. Less frequently tested but possible as a short note.",pyqs:["2022","2023"]},
+]},
+{id:"c4",title:"Chapter 4 – Inter-process Communication (IPC)",co:"CO3",bg:"#FAECE7",tc:"#4A1B0C",ac:"#D85A30",questions:[
+  {text:"Explain Semaphores: binary and counting types, P/V operations. Solve the producer-consumer bounded-buffer problem.",p:88,lvl:"H",marks:"5–7",freq:4,reason:"Semaphore + P/V + producer-consumer is the MOST ASKED IPC topic. Appears as 5–7 marks.",pyqs:["2021","2022","2023","2024"]},
+  {text:"Differentiate between Process, Thread, and Function. Justify why threads are lightweight processes.",p:82,lvl:"H",marks:"4–5",freq:4,reason:"Process vs Thread differentiation asked in 4 PYQs. Standard 4–5 mark question.",pyqs:["2021","2022","2023","2025"]},
+  {text:"Describe the shared data problem. Explain Critical Section and Mutex as solutions.",p:78,lvl:"H",marks:"4–5",freq:4,reason:"Shared data + Critical Section + Mutex is a frequently examined trio. Often comes with code snippet.",pyqs:["2021","2022","2024","2025"]},
+  {text:"Explain Priority Inversion and Deadlock. What are the conditions for deadlock? How can it be prevented?",p:65,lvl:"M",marks:"3–5",freq:3,reason:"Priority Inversion listed in syllabus. Commonly paired with semaphore question.",pyqs:["2022","2023","2024"]},
+  {text:"Describe Mailbox and Message Queue functions used in IPC with examples.",p:60,lvl:"M",marks:"3–4",freq:3,reason:"Mailbox + Queue are core IPC mechanisms. Often asked together as 3–4 marks.",pyqs:["2021","2023","2024"]},
+  {text:"Explain Pipe functions and Socket functions in IPC. Compare the two mechanisms.",p:55,lvl:"M",marks:"3–4",freq:2,reason:"Pipe + Socket listed at end of CO3 syllabus. Appeared 2 times — may increase in frequency.",pyqs:["2023","2024"]},
+]},
+{id:"c5",title:"Chapter 5 – OS and RTOS",co:"CO3",bg:"#E1F5EE",tc:"#04342C",ac:"#1D9E75",questions:[
+  {text:"Define RTOS. Differentiate Hard, Soft, and Firm real-time systems with examples.",p:80,lvl:"H",marks:"4–5",freq:4,reason:"RTOS types is a standard definition + differentiation question. Asked in 4 PYQs.",pyqs:["2021","2022","2023","2024"]},
+  {text:"Define Process Control Block (PCB). List and explain all fields stored in it.",p:70,lvl:"M",marks:"4",freq:3,reason:"PCB fields is a predictable 4-mark question. Appeared 3 times. Easy marks with proper list.",pyqs:["2021","2022","2024"]},
+  {text:"Differentiate between Cooperative and Preemptive multitasking with examples.",p:65,lvl:"M",marks:"3–4",freq:3,reason:"Multitasking models appear in scheduling context. Often paired with scheduling algorithms.",pyqs:["2022","2023","2024"]},
+]},
+{id:"c6",title:"Chapter 6 – Software Architectures & Task Scheduling",co:"CO3",bg:"#FAEEDA",tc:"#412402",ac:"#EF9F27",questions:[
+  {text:"Analyze the differences between Clock-driven and Event-driven scheduling based on working principles, advantages, and real-time applications.",p:92,lvl:"H",marks:"3–5",freq:5,reason:"Asked in EVERY PYQ 2021–2025. Was in the previous paper too. Will DEFINITELY appear again.",pyqs:["2021","2022","2023","2024","2025"]},
+  {text:"Evaluate the effectiveness of RMS, EDF, and Round-Robin scheduling algorithms for meeting real-time constraints.",p:88,lvl:"H",marks:"3–5",freq:4,reason:"Scheduling algorithms evaluation is the OR alternative to clock vs event. Both appear every year.",pyqs:["2021","2022","2023","2025"]},
+  {text:"Explain Function Queue Scheduling. Compare with round-robin interrupt-based scheduling.",p:55,lvl:"M",marks:"3–4",freq:2,reason:"Function Queue Scheduling is explicitly in syllabus. Less tested but may appear as alternate.",pyqs:["2022","2024"]},
+]},
+{id:"c7",title:"Chapter 7 – MSP430 Case Study",co:"CO1",bg:"#F5C4B3",tc:"#4A1B0C",ac:"#D85A30",questions:[
+  {text:"Analyze and discuss the low-power modes and features of the MSP430 processor in detail.",p:95,lvl:"H",marks:"7",freq:5,reason:"7-mark Q5 in previous paper. Appeared in ALL 5 PYQs. One of the two guaranteed 7-mark MSP430 questions.",pyqs:["2021","2022","2023","2024","2025"]},
+  {text:"Analyze the Timer_A module of MSP430 and explain its various modes of operation (Up, Continuous, Up/Down) with PWM generation.",p:92,lvl:"H",marks:"7",freq:5,reason:"Q5 alternate in previous paper. Appeared every year. Timer + PWM programming is a must-prepare topic.",pyqs:["2021","2022","2023","2024","2025"]},
+  {text:"Describe the MSP430 RISC CPU architecture: registers, orthogonal instruction set, and compiler-friendly features.",p:78,lvl:"H",marks:"5",freq:4,reason:"Architecture description asked 4 times. Standard 5-mark question. Often appears as Q1 part.",pyqs:["2021","2022","2023","2024"]},
+  {text:"Analyze the multiplexing scheme in MSP430 for port pins. Explain GPIO special features and USCI module modes.",p:75,lvl:"M",marks:"4",freq:4,reason:"Pin multiplexing + USCI asked in Q1(b) of previous paper. Also appears in PYQs.",pyqs:["2021","2022","2024","2025"]},
+  {text:"Explain the clocking system of MSP430: MCLK, SMCLK, ACLK sources and configuration.",p:60,lvl:"M",marks:"4",freq:3,reason:"Clock system is a core MSP430 topic. Appears as a 4-mark question in ~3 PYQs.",pyqs:["2022","2023","2024"]},
+  {text:"Write a program for MSP430 to generate a square wave / UART transmission / LED ring counter.",p:65,lvl:"M",marks:"4–5",freq:3,reason:"Programming questions on MSP430 appear irregularly but are in the syllabus and 3 PYQs.",pyqs:["2021","2023","2025"]},
+]}
+];
+
+let curTab="all";
+
+function setTab(t,btn){
+  curTab=t;
+  document.querySelectorAll(".tab").forEach(b=>b.classList.remove("on"));
+  btn.classList.add("on");
+  render();
+}
+
+function barColor(p){return p>=80?"#1D9E75":p>=60?"#EF9F27":"#85B7EB";}
+function lvlLabel(l){return l==="H"?"🔴 Must-do":l==="M"?"🟡 Likely":"🟢 Possible";}
+
+function render(){
+  const el=document.getElementById("qlist");
+  el.innerHTML="";
+  chapters.forEach(ch=>{
+    const qs=ch.questions.filter(q=>{
+      if(curTab==="all")return true;
+      if(curTab==="hot")return q.lvl==="H";
+      return curTab===ch.id;
+    });
+    if(!qs.length)return;
+    const block=document.createElement("div");
+    block.className="ch-block";
+    block.innerHTML=`<div class="ch-head" style="background:${ch.bg}">
+      <span style="width:9px;height:9px;border-radius:50%;background:${ch.ac};display:inline-block;flex-shrink:0"></span>
+      <span class="ch-title" style="color:${ch.tc}">${ch.title}</span>
+      <span class="ch-co badge" style="background:${ch.ac}33;color:${ch.tc}">${ch.co}</span>
+    </div>`;
+    qs.forEach(q=>{
+      const card=document.createElement("div");
+      card.className="qcard";
+      const pyqHtml=q.pyqs.map(y=>`<span class="pyq-pill">${y}</span>`).join("");
+      card.innerHTML=`<div class="qleft">
+        <div class="qtext">${q.text}</div>
+        <div class="qmeta">
+          <span class="badge ${q.lvl}">${lvlLabel(q.lvl)}</span>
+          <span class="badge mb">${q.marks} marks</span>
+          <span class="badge freq">Asked ${q.freq}× in PYQs</span>
+        </div>
+        <div class="detail">
+          <div class="detail-text">${q.reason}</div>
+          <div class="pyq-list">${pyqHtml}</div>
+          <button class="sbtn" onclick="event.stopPropagation();sendPrompt('Give me a detailed exam-ready answer for: ${q.text.replace(/'/g,"\\'").replace(/"/g,'\\"')}')">Get full answer ↗</button>
+        </div>
+      </div>
+      <div class="pbar-wrap">
+        <div class="pbar-track"><div class="pbar-fill" style="height:${q.p}%;background:${barColor(q.p)}"></div></div>
+        <div class="pbar-num">${q.p}%</div>
+        <div class="arr">▾</div>
+      </div>`;
+      card.addEventListener("click",()=>card.classList.toggle("open"));
+      block.appendChild(card);
+    });
+    el.appendChild(block);
+  });
+}
+render();
+</script>
