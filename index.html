@@ -1,4 +1,4 @@
-
+<!-- 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 .wrap{padding:.75rem 0;font-family:var(--font-sans)}
@@ -169,4 +169,72 @@ function render(){
   });
 }
 render();
-</script>
+</script> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Animated Name</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:#111;
+      overflow:hidden;
+      font-family:Arial, sans-serif;
+    }
+
+    .name{
+      font-size:70px;
+      font-weight:bold;
+      color:#00ffe5;
+      text-transform:uppercase;
+      animation: glow 2s infinite alternate,
+                 zoom 3s infinite;
+    }
+
+    @keyframes glow{
+      from{
+        text-shadow: 0 0 10px #00ffe5,
+                     0 0 20px #00ffe5,
+                     0 0 40px #00ffe5;
+      }
+      to{
+        text-shadow: 0 0 20px #00ffe5,
+                     0 0 40px #00ffe5,
+                     0 0 80px #00ffe5;
+      }
+    }
+
+    @keyframes zoom{
+      0%{
+        transform:scale(1);
+      }
+      50%{
+        transform:scale(1.1);
+      }
+      100%{
+        transform:scale(1);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="name">F***</div>
+
+</body>
+</html>
